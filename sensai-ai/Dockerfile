@@ -79,3 +79,8 @@ RUN printf "OPENAI_API_KEY=$OPENAI_API_KEY\nGOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID\n
 
 # Clean up
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /src
+
+CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+

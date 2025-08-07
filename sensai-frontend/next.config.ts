@@ -1,15 +1,12 @@
 import type { NextConfig } from "next";
 
+const backendUrl = process.env.BACKEND_URL || "http://localhost:8000";
+
 const nextConfig: NextConfig = {
-  /* config options here */
   eslint: {
-    // Warning: This allows production builds to successfully complete even if
-    // your project has ESLint errors.
     ignoreDuringBuilds: true,
   },
   typescript: {
-    // Warning: This allows production builds to successfully complete even if
-    // your project has TypeScript errors.
     ignoreBuildErrors: true,
   },
   output: 'standalone',
@@ -20,6 +17,15 @@ const nextConfig: NextConfig = {
       },
     },
   },
+  async rewrites() {
+    return [
+      {
+        source: '/api/:path*',
+        destination: `${backendUrl}/api/:path*`,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
+
